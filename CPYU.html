@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <!-- CSS only -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    <link rel="stylesheet" href="CSS/style.css">
+
+    <!-- ---------------------- Mapas --------------------------------- -->
+    <link rel="stylesheet" type="text" href="CSS/styleMap.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.8.0/dist/leaflet.css"
+    integrity="sha512-hoalWLoI8r4UszCkZ5kL8vayOGVae1oxXe/2A4AO6J9+580uKHDO3JdHb7NzwwzK5xr/Fs0W40kiNHxM9vyTtQ=="
+    crossorigin=""/>
+
+    <title>Movilidad de Transporte Urbano</title>
+</head>
+<body>
+    <header>
+        <h3>Movilidad y Transporte Urbano Seguro</h3>
+
+    </header>
+    
+<nav class="p-3 bg-white text-white">
+    <div class="container">
+      <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+        <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
+          <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap"><use xlink:href="#bootstrap"></use></svg>
+        </a>
+  
+        <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+          <li><a href="Index.html" class="nav-link px-2 text-white ">Inicio</a></li>
+          <li><a href="Rutas.html" class="nav-link px-2 text-white">Rutas</a></li>
+          <li><a href="QuienesSomos.html" class="nav-link px-2 text-white">Quienes somos</a></li>
+          
+        </ul>
+  
+        <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search">
+          <input type="search" class="form-control form-control-dark text-white bg-dark" placeholder="Search..." aria-label="Search">
+        </form>
+  
+        <div class="text-end">
+          <button type="button" class="btn btn-outline-light me-2 bg-black "><a href="Register.html" class="nav-link text-white">Registrarse</a></button>
+          <button type="button" class="btn btn-outline-light bg-black"><a href="Login.html" class="nav-link text-white">Iniciar Sesion</a></button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <div id="DivisionRutas ">
+
+    <div class="d-flex flex-column flex-shrink-0 p-2 text-white bg-dark" style=" margin: 5% 10% 5% 10%; width: 80%;">
+      <a href="" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
+        <svg class="bi pe-none me-2" width="40" height="32"><use xlink:href="#bootstrap"></use></svg>
+        <span class="fs-1">Rutas</span>
+        </a>
+        <hr>
+        <ul class="nav nav-pills flex-column mb-auto">
+          <li class="nav-item">
+            <a href="SCM.html" class="nav-link  text-white " aria-current="page">
+              <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#home"></use></svg>
+              Situr Circuito Metropolitano
+            </a>
+          </li>
+          <li>
+            <a href="SCC.html" class="nav-link text-white">
+              <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#speedometer2"></use></svg>
+              Circuito Colonias
+            </a>
+          </li>
+
+          <li>
+            <a href="CPYP.html" class="nav-link text-white">
+              <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#grid"></use></svg>
+              Circuito Poniente Plazas
+            </a>
+          </li>
+          <li>
+            <a href="CPYU.html" class="nav-link active">
+              <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#people-circle"></use></svg>
+              Situr Circuito Poniente y Universidades
+            </a>
+          </li>
+
+        </ul>
+        <hr>
+
+      </div>
+    </div>
+
+   <!--  ------------------------------Localizacion de Paraderos-------------------------------- -->
+   <div class="d-flex flex-column flex-shrink-0 p-2 text-white bg-dark" style=" margin: 5% 10% 5% 10%; width: 80%;">
+    <a href="" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
+      <svg class="bi pe-none me-2" width="40" height="32"><use xlink:href="#bootstrap"></use></svg>
+      <span class="fs-1">Rutas</span>
+      </a>
+      <hr>
+      <ul class="nav nav-pills flex-column mb-auto">
+        <li class="nav-item">
+          <a href="SCM.html" class="nav-link active " aria-current="page">
+            <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#home"></use></svg>
+            Situr Circuito Poniente y Universidades
+          </a>
+
+          
+          <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3 p-3" id="buscadorRutas" role="search">
+            <input type="search" class="form-control form-control-dark text-white bg-dark" placeholder="Search..." aria-label="Search">
+          </form>
+
+          <select name="select-location" id="select-location"  size="5" aria-label="size 5 select example" class="col-5 m-lg-3 m-3 m-md-3  rounded-3">
+            <option value="21.044713, -89.544039">Motul-Merida 1</option>		
+            <option value="21.041681, -89.546861">Motul-Merida 2</option>		
+            <option value="21.039270, -89.549336">Motul-Merida 3</option>		
+            <option value="21.023294, -89.564676">Puente entrada</option>		
+            <option value="21.019237, -89.568523">Frac Paraiso Maya</option>		
+            <option value="21.017174, -89.569724">Avenida Maya</option>
+            <option value="21.012321, -89.572779">Frac.La Florida</option>		
+            <option value="21.008939, -89.576913">UMSA</option>		
+            <option value="21.013576, -89.571665">Jardines del Norte</option>	
+            <option value="21.001256, -89.591014">Colegio Ginecologia</option>		
+            <option value="20.999724, -89.593201">Parque Margarita Maza</option>		
+            <option value="20.999105, -89.596959">Plaza fiesta</option>		
+            <option value="20.996994, -89.600109">Avenida Carrillo Puerto</option>
+            <option value="21.000742, -89.596280">Paradero 1</option>		
+            <option value="20.995639, -89.601188">Escuela Isolina Perez</option>		
+            <option value="20.994704, -89.600023">Avenida Aleman</option>	
+            <option value="20.964350, -89.626473">Dif Municipal</option>		
+            <option value="20.984136, -89.614215">Av Perez Ponce</option>		
+            <option value="20.985113, -89.615952">Wallmart Montejo</option>		
+            <option value="20.988649, -89.621209">Oxxo San Fernando</option>
+            <option value="20.990172, -89.623311">Asilo Celarain</option>		
+            <option value="20.995568, -89.630786">Avenida Cupules</option>		
+            <option value="20.995626, -89.635404">Canacintra</option>	
+            <option value="20.995138, -89.641021">Av Alfredo Barrera</option>		
+            <option value="20.992966, -89.637379">Garcia Gineres</option>		
+            <option value="20.988880, -89.639501">Galletera Donde</option>		
+            <option value="20.995181, -89.639738">ISSTE</option>
+            <option value="20.995409, -89.642784">Parque Ermilio</option>		
+            <option value="20.995607, -89.644880">IMSS La ceiba</option>		
+            <option value="20.995724, -89.647137">Parque Consuelo Zavala</option>	
+            <option value="20.993343, -89.649244">Plaza las americas</option>		
+            <option value="20.994095, -89.651298">Plaza Dorada</option>		
+            <option value="20.995286, -89.655043">Wallmart Pensiones</option>		
+            <option value="20.990679, -89.648330">Paradero 2</option>
+            <option value="20.980564, -89.648757">Jacinto Canek</option>		
+            <option value="20.982134, -89.654902">Servicios Publicos Municipales</option>		
+            <option value="20.976477, -89.655540 ">Parque ecologico </option>	
+            <option value="20.972852, -89.656007">Hospital Psiquiatrico</option>		
+            <option value="20.970111, -89.657694 ">Escuela Jose Emilio</option>		
+            <option value="20.965032, -89.649734">Circuito Colonias</option>		
+            <option value="20.952924, -89.642582">Bodega Aurrera Itzaes</option>
+            <option value="20.953443, -89.641614">Paradero 3</option>		
+            <option value="20.984876, -89.655835">Atlantida</option>		
+            <option value="20.988976, -89.662797">Plaza Canek</option>	
+            <option value="20.986070, -89.657796">Hacienda San Antonio</option>		
+            <option value="20.988260, -89.635592">Universidad del Sur</option>		
+            <option value="20.987746, -89.631947">Parque las americas</option>		
+            <option value="20.987150, -89.627464">Villa Claridad</option>
+            <option value="20.986114, -89.619937">Fiesta Americana</option>		
+            <option value="20.995602, -89.600740">Parque Felipe Carrillo</option>		
+            <option value="21.002628, -89.593985">Sargapa</option>	
+            <option value="20.997770, -89.595740">Parque de la amistad</option>		
+        </select>  
+
+        </li>
+      </ul>
+
+    <div id="map" class="m-lg-5 m-sm-5 col-lg-10 col-sm-10  leaflet-container leaflet-touch leaflet-fade-anim leaflet-grab leaflet-touch-drag leaflet-touch-zoom" tabindex="0" style="position: relative; height: 500px;">
+
+    </div>
+  </div>
+      <!------------------  Script del Mapa  ------------------->   
+      
+      <script src="https://unpkg.com/leaflet@1.8.0/dist/leaflet.js"
+      integrity="sha512-BB3hKbKWOc9Ez/TAwyWxNXeoV9c1v6FIeYiBieIWkpLjauysF18NzgR1MBNBXf8/KABdlkX68nAhlwcDFLGPCQ=="
+      crossorigin=""></script>
+    <script src="JS/map.js">  </script>
+    <script src="JS/mapRutas.js"></script>
+
+    <footer >
+      <p>
+      INFORMACION DEL CONTACTO. 
+      Nuestra pagina brinda un numero destinado para alguna sugerencia o queja ciudadana a la cual podrás contactar al siguiente número telefónico 9991381494  
+      </p>
+    </footer>
+</body>
+</html>

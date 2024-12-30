@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <!-- CSS only -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    <link rel="stylesheet" href="CSS/style.css">
+
+    <!-- ---------------------- Mapas --------------------------------- -->
+    <link rel="stylesheet" type="text" href="CSS/styleMap.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.8.0/dist/leaflet.css"
+    integrity="sha512-hoalWLoI8r4UszCkZ5kL8vayOGVae1oxXe/2A4AO6J9+580uKHDO3JdHb7NzwwzK5xr/Fs0W40kiNHxM9vyTtQ=="
+    crossorigin=""/>
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
+
+
+    
+
+    <title>Movilidad de Transporte Urbano</title>
+</head>
+<body>
+    <header>
+        <h3>Movilidad y Transporte Urbano Seguro</h3>
+
+    </header>
+    
+<nav class="p-3 bg-white text-white">
+    <div class="container">
+      <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+        <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
+          <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap"><use xlink:href="#bootstrap"></use></svg>
+        </a>
+  
+        <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+          <li><a href="Index.html" class="nav-link px-2 text-white ">Inicio</a></li>
+          <li><a href="Rutas.html" class="nav-link px-2 text-white">Rutas</a></li>
+          <li><a href="QuienesSomos.html" class="nav-link px-2 text-white">Quienes somos</a></li>
+        
+        </ul>
+
+        <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search">
+          <input type="search" class="form-control form-control-dark text-white bg-dark" placeholder="Search..." aria-label="Search">
+        </form>
+
+        <div class="text-end">
+          <button type="button" class="btn btn-outline-light me-2 bg-black "><a href="Register.html" class="nav-link text-white">Registrarse</a></button>
+          <button type="button" class="btn btn-outline-light bg-black"><a href="Login.html" class="nav-link text-white">Iniciar Sesion</a></button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <div id="DivisionRutas ">
+
+    <div class="d-flex flex-column flex-shrink-0 p-2 text-white bg-dark" style=" margin: 2% 10% 2% 10%; width: 80%;">
+      <a href="" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
+        <svg class="bi pe-none me-2" width="40" height="32"><use xlink:href="#bootstrap"></use></svg>
+        <span class="fs-1">Rutas</span>
+        </a>
+        <hr>
+        <ul class="nav nav-pills flex-column mb-auto">
+          <li class="nav-item">
+            <a href="SCM.html" class="nav-link active " aria-current="page">
+              <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#home"></use></svg>
+              Situr Circuito Metropolitano
+            </a>
+          </li>
+          <li>
+            <a href="SCC.html" class="nav-link text-white">
+              <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#speedometer2"></use></svg>
+              Circuito Colonias
+            </a>
+          </li>
+
+          <li>
+            <a href="CPYP.html" class="nav-link text-white">
+              <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#grid"></use></svg>
+              Circuito Poniente Plazas
+            </a>
+          </li>
+          <li>
+            <a href="CPYU.html" class="nav-link text-white">
+              <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#people-circle"></use></svg>
+              Circuito Poniente y Universidades
+            </a>
+          </li>
+
+        </ul>
+        <hr>
+
+    </div>
+  </div>
+   <!--  ------------------------------Localizacion de Paraderos-------------------------------- -->
+   <div class="d-flex flex-column flex-shrink-0 p-2 text-white bg-dark" style=" margin: 5% 10% 5% 10%; width: 80%;">
+      <a href="" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
+        <svg class="bi pe-none me-2" width="40" height="32"><use xlink:href="#bootstrap"></use></svg>
+        <span class="fs-1">Situr Circuito Metropolitano</span>
+        </a>
+        <hr>
+        <ul class="nav nav-pills flex-column mb-auto">
+          <li class="nav-item">
+            <a class="nav-link active " aria-current="page">
+              <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#home"></use></svg>
+              Todos los paraderos
+            </a>
+            
+            <div class="col-10 col-lg-auto mb-3 mb-lg-0 me-lg-3 p-4" id="buscador" role="search">
+              <input type="text" id="buscadorParaderosSCM" class="form-control form-control-dark text-white bg-dark" placeholder="Buscar..." aria-label="Buscar">
+              <button class="btn btn-info mb-2" id="botonBuscar" onclick="busParadero()">Buscar</button><br>
+              
+              <select id="resultado" size="3" aria-label="size3 select example" class="col-8 m-lg-3 m-3 m-md-3  rounded-2" >
+
+              </select>
+            </div>
+            <button class="btn btn-info mb-2" id="btnAtivar" onclick="activateBus()">Activar paraderos</button><br>
+
+            <select name="select-location" id="select-location"  size="5" aria-label="size 5 select example" class="pb-5 m-lg-3 m-3 m-md-3  rounded-2">
+              <option value="20.93801606173682, -89.6178498596308">Paradero Aki Santa Rosa</option>           
+              <option value="20.938096985617193, -89.61567752099675">Paradero UTM</option>
+              <option value="20.93733948173477, -89.6131966359856">Paradero140</option>	
+              <option value="20.934964267324865, -89.61432334217652">Paradero141</option>
+              <option value="20.93264713617412, -89.61451417947718">Paradero142</option>
+              <option value="20.932324714923553, -89.61628838491791">Paradero143</option>
+              <option value="20.931885221704604, -89.61859521418155">Parque Serapio Rendon</option>
+              <option value="20.92991223627948, -89.61856628845432">Paradero144</option>
+              <option value="20.928321875060615, -89.61705921411834">Paradero145</option>
+              <option value="20.927659817590666, -89.61599161739193">Paradero146</option>
+              <option value="20.92768281804461, -89.61435188827701">Paradero147</option>
+              <option value="20.92771143611009, -89.61198500387385">Paradero148</option>
+              <option value="20.927747244459372, -89.61033875128048">Paradero149</option>
+              <option value="20.92838541657377, -89.60773698089463">IMSS 42 Sur</option>
+              <option value="20.929351841015208, -89.6080266936523">Paradero150</option>
+              <option value="20.931387754766526, -89.60864750669491">Paradero151</option>
+              <option value="20.933797313112198, -89.60729091523456">Paradero152</option>
+              <option value="20.93452317959962, -89.6066057215828">Glorieta Maria Luisa</option>
+              <option value="20.934254982092487, -89.60591930121507">Paradero1</option>
+              <option value="20.93306472697529, -89.60454758319334">Paradero2</option>
+              <option value="20.93310605543647, -89.60314931579056">Paradero3</option>
+              <option value="20.93309778973691, -89.5999014415319">Paradero4</option>
+              <option value="20.935246854139578, -89.59883946629306">Paradero5</option>
+              <option value="20.935263385291446, -89.597007559018">Paradero6</option>
+              <option value="20.935271650863253, -89.59530839862981">Paradero7</option>
+              <option value="20.93693302157176, -89.59551194389432">Paradero8</option>
+              <option value="20.93979698303053, -89.59613142945035">Paradero9</option>
+              <option value="20.93983004431478, -89.59453846659342">Paradero10</option>
+              <option value="20.94109050033291, -89.59271540910184">Paradero11</option>
+              <option value="20.944024315244828, -89.59259571883946">Paradero12</option>
+              <option value="20.945635697658982, -89.59248978463444">Paradero13</option>
+              <option value="20.94880916679421, -89.59230984153321">Paradero14</option>
+              <option value="20.947753485521343, -89.58891865198095">Paradero15</option>
+              <option value="20.94643015617961, -89.58673746435191">Paradero16</option>
+              <option value="20.945852934368055, -89.58562274857762">Paradero17</option>
+              <option value="20.946841933268885, -89.583511165904">Paradero18</option>
+              <option value="20.94852004089954, -89.58263704123623">Paradero19</option>
+              <option value="20.950861137306482, -89.58230574479425">Paradero20</option>
+              <option value="20.954367827575812, -89.5825119750463">Paradero21</option>
+              <option value="20.957123939564074, -89.58253902199402">Paradero22</option>
+              <option value="20.95922456575468, -89.5824931149421">Paradero23</option>
+              <option value="20.959831080042168, -89.5809203261194">Paradero24</option>
+              <option value="20.959864765789863, -89.57864182891582">Paradero Bodega Aurera Oriente</option>
+              <option value="20.958605768624956, -89.57538063473662">Paradero26</option>
+              <option value="20.95780138478511, -89.57327138074113">Paradero27</option>
+              <option value="20.95722387578626, -89.57200141104984">Paradero Ferre Oriente</option>
+              <option value="20.959317335334394, -89.57026762635647">Paradero29</option>
+              <option value="20.966384514172308, -89.56877535937629">Paradero Carretera Tixcocob</option>
+              <option value="20.969756776278093, -89.56835731331333">Paradero30</option>
+              <option value="20.96741597337348, -89.56865761179873">Paradero Willis Amalia S</option>
+              <option value="20.967142649434525, -89.57219259316783">Paradero31</option>
+              <option value="20.964865354800473, -89.58349883156802">Paradero32</option>
+              <option value="20.965368136224683, -89.58816374775505">Paradero33</option>
+              <option value="20.965613674580048, -89.59072288070793">Paradero34</option>
+              <option value="20.968600391440116, -89.59097922747674">Paradero35</option>
+              <option value="20.96940036419445, -89.59018420499034">Paradero CETIS112</option>
+              <option value="20.96970972892871, -89.58796337744926">Paradero IMSS Frac.</option>
+              <option value="20.96975901600896, -89.58442210824698">Paradero Fracc. del Parque</option>
+              <option value="20.970160722418292, -89.58057513386844">Paradero36</option>
+              <option value="20.971219059131656, -89.57973128141936">Paradero37</option>
+              <option value="20.972416438366135, -89.58024421133759">Paradero el pez Volador</option>
+              <option value="20.974957940529713, -89.58053376855041">Paradero38</option>
+              <option value="20.975684076086452, -89.57829176841811">Paradero39</option>
+              <option value="20.97662399420342, -89.57361553525976">Paradero40</option>
+              <option value="20.97892398753758, -89.57201155216706">Paradero41</option>
+              <option value="20.98265471539661, -89.57178241172839">Paradero42</option>
+              <option value="20.985765693745908, -89.57129383337579">Paradero43</option>
+              <option value="20.98971218736692, -89.5712045322655">Paradero44</option>
+              <option value="20.99235238887957, -89.5711747652251">Paradero Bodega Aurrera Express, Itzimna</option>
+              <option value="20.998159688508757, -89.57139803382918">Paradero Glorieta X'Tabay</option>
+              <option value="20.999898753112127, -89.572223520303">Paradero Macro Plaza</option>
+              <option value="21.002619930728212, -89.57317550452052">Paradero45</option>
+              <option value="21.00266004021571, -89.57602543880836">Paradero46</option>
+              <option value="21.004304519797987, -89.58029317963258">Paradero47</option>
+              <option value="21.006095859504224, -89.58182195549298">Paradero48 </option>
+              <option value="21.004430360597716, -89.58625000863475">Paradero49</option>
+              <option value="21.00126047889983, -89.59140692861178">Paradero50</option>
+              <option value="20.998246763110497, -89.59591329932992">Paradero51</option>
+              <option value="20.99984464684565, -89.59699656152178">Plaza Fiesta</option>
+              <option value="21.00376849134172, -89.59231686884569">Paradero52</option>
+              <option value="21.005548345600808, -89.59043199263685">Paradero53</option>
+              <option value="21.01129227570156, -89.58365077132648">Wallmart Uptown</option>
+              <option value="21.013779895164834, -89.58460404206649">Paradero54</option>
+              <option value="21.015519181658963, -89.58772383716818">Parque Tabentha</option>
+              <option value="21.01887153221027, -89.59385188006694">Paradero55</option>
+              <option value="21.02179889433609, -89.60266528111988">Paradero56</option>
+              <option value="21.02740109979061, -89.60455772916444">Paradero57</option>
+              <option value="21.032649821696577, -89.60455772916444">Paradero58</option>
+              <option value="21.033356366296672, -89.60818041548684">Paradero59</option>
+              <option value="21.033659170099682, -89.61001879362057">Paradero60</option>
+              <option value="21.033104029324093, -89.6165612569789">Paradero61</option>
+              <option value="21.032649821696577, -89.6229415105019">Paradero62</option>
+              <option value="21.031388126577905, -89.62315779028233">Paradero63</option>
+              <option value="21.030631104379, -89.62548279792207">Plaza Grande</option>
+              <option value="21.032397483524537, -89.62699675632862">Glorieta Plaza Grande</option>
+              <option value="21.024151379485456, -89.62643409406105">Paradero64</option>		
+              <option value="21.01168090288891, -89.62440995873635">Paradero65</option>		
+              <option value="21.011806872512338, -89.6287281140957">Paradero66</option>		
+              <option value="21.011918566100505, -89.63158979621888">Super Aki Chuburna</option>		
+              <option value="21.02016820926106, -89.63127041370059">Paradero67</option>		
+              <option value="21.0277387900341, -89.63051343443576">Paradero68</option>		
+              <option value="21.030363168408794, -89.633811701208">Paradero69</option>		
+              <option value="21.03000988941681, -89.64197626325695">Glorieta</option>		
+              <option value="21.031689081331134, -89.64576470516187">Glorieta La Mestiza</option>		
+              <option value="21.028791076256923, -89.64767566224974">Paradero70</option>		
+              <option value="21.0262577098224, -89.64900274465506">Paradero71</option>		
+              <option value="21.02282779868259, -89.65017655500088">Paradero72</option>		
+              <option value="21.01930253000219, -89.65099311871973">Paradero73</option>		
+              <option value="21.02039823054631, -89.65431040882746">Paradero74</option>		
+              <option value="21.018322699100306, -89.65655184484847">Paradero75</option>		
+              <option value="21.01458352739596, -89.65667322779447">Paradero76</option>		
+              <option value="21.01243062862618, -89.65412418641073">Paradero77</option>	
+              <option value="21.0087090882523, -89.65579859748074">Paradero78</option>		
+              <option value="21.005263666039077, -89.65871684087269">Paradero79</option>		
+              <option value="21.00406175585244, -89.66459624300059">Paradero80</option>		
+              <option value="20.999058390967658, -89.663990390631">Paradero81</option>		
+              <option value="20.99671871233334, -89.65972171710762">Paradero82</option>		
+              <option value="20.99541903308074, -89.65564436437572">Paradero83</option>		
+              <option value="20.994123490793196, -89.65148421872614">Paradero84</option>
+              <option value="20.992961903157404, -89.64876827581358">Plaza las Americas</option>		
+              <option value="20.99131149501802, -89.64834845386963">Paradero85</option>
+              <option value="20.990447371743898, -89.64928917152315">Paradero86</option>		
+              <option value="20.991991457357592, -89.651322335484">Paradero87</option>		
+              <option value="20.991082684829994, -89.65293846103286">Paradero88</option>		
+              <option value="20.987503060438033, -89.65490969688534">Paradero89</option>		
+              <option value="20.986430988974902, -89.65550671811854">Paradero90</option>		
+              <option value="20.98655848631584, -89.65838956254063">Paradero91</option>		
+              <option value="20.987861786225185, -89.66049859082837">Paradero92</option>		
+              <option value="20.989586495725675, -89.66333212344092">Plaza Canek</option>
+              <option value="20.9879451183864, -89.66418393078197">Paradero93</option>
+              <option value="20.98546087183699, -89.66416247310997">Paradero94</option>		
+              <option value="20.98361133044917, -89.66402161422043">Jardines de Bepensa</option>
+              <option value="20.981348253872415, -89.66416274649387">Paradero95</option>		
+              <option value="20.97752417650026, -89.66412447006955">Paradero96</option>		
+              <option value="20.97606159522137, -89.66394956485388">Paradero97</option>		
+              <option value="20.97420831188139, -89.66416608900745">JAPAY Mulsay</option>
+              <option value="20.971776667532556, -89.66377569747632">Paradero98</option>		
+              <option value="20.97099525182755, -89.66379715514832">Paradero99</option>		
+              <option value="20.96935968729908, -89.66373613951666">Paradero100</option>		
+              <option value="20.96870475754044, -89.66372740724519">Paradero101</option>
+              <option value="20.967757154854542, -89.66371768895242">Paradero102</option>		
+              <option value="20.966666187064632, -89.66367709067362">Paradero103</option>		
+              <option value="20.966037701974546, -89.6637221835656  ">Paradero104</option>		
+              <option value="20.964155472036474, -89.66368222154549">Paradero105</option>		
+              <option value="20.962440172717283, -89.66368342175225">Paradero106</option>		
+              <option value="20.961668727011897, -89.66365659966267">Av. Juan Pablo II</option>
+              <option value="20.96051530737688, -89.66367164193734">Paradero107</option>		
+              <option value="20.95859080730487, -89.66370495672048">Paradero108</option>		
+              <option value="20.956322519604324, -89.66369225052999">Paradero109</option>
+              <option value="20.95458983510781, -89.6636317240509">Paradero110</option>		
+              <option value="20.952182640378016, -89.66365834044159">Paradero111</option>		
+              <option value="20.950483236147278, -89.66352927143387">Paradero112</option>		
+              <option value="20.94898682835499, -89.6635965634116">Paradero113</option>		
+              <option value="20.947377551466978, -89.66328982086071">Paradero114</option>		
+              <option value="20.94603521098462, -89.66056384750394">Paradero115</option>		
+              <option value="20.94519979943366, -89.65863754325817">Paradero116</option>		
+              <option value="20.94492347863475, -89.65740854115658">Paradero117</option>
+              <option value="20.944749892229794, -89.65652851496027">Paradero118</option>		
+              <option value="20.945791407613836, -89.65451052384351">Paradero119</option>		
+              <option value="20.94715174332834, -89.6522345940366">Paradero120</option>		
+              <option value="20.94855811909117, -89.65020522329067">Paradero121</option>		
+              <option value="20.94823423457234, -89.64953663007442">Sams Aviacion</option>		
+              <option value="20.946992257714133, -89.64936080891565">Paradero122</option>		
+              <option value="20.94578070802328, -89.64916356166506">Paradero123</option>		
+              <option value="20.9454512498179, -89.64910287020224 ">Paradero124</option>		
+              <option value="20.941553238931327, -89.64841988783503">Paradero125</option>
+              <option value="20.940032028953475, -89.64816068845411">Paradero126</option>		
+              <option value="20.938518958191857, -89.64795333522662">Paradero127</option>		
+              <option value="20.937916494813802, -89.64646431723587">Paradero128</option>		
+              <option value="20.937870519213664, -89.64473129788135">Paradero129</option>		
+              <option value="20.938308910838202, -89.64427800455934">Paradero130</option>		
+              <option value="20.939528533556544, -89.64349866917689">Parque La Mariposa</option>		
+              <option value="20.941289475787766, -89.6423862414215">Paradero131</option>		
+              <option value="20.94258706206277, -89.64135775169206">Paradero132</option>		
+              <option value="20.942283731213493, -89.63695509390277">Paradero133</option>
+              <option value="20.941793425907107, -89.63104232592659">Paradero134</option>		
+              <option value="20.940967686105783, -89.62857034183067">Paradero135</option>		
+              <option value="20.940362136460454, -89.62456668288586">Paradero136</option>		
+              <option value="20.94005880110344, -89.62176991256891">Paradero137</option>		
+              <option value="20.93945206837968, -89.6199454092257">Paradero138</option>		
+              <option value="20.938126875909468, -89.61840878253646">Paradero139</option>		
+	
+          </select> 
+
+          </li>
+        </ul>
+
+      <div id="map" class="m-lg-5 m-sm-5 col-lg-10 col-sm-10  leaflet-container leaflet-touch leaflet-fade-anim leaflet-grab leaflet-touch-drag leaflet-touch-zoom" tabindex="0" style="position: relative; height: 500px;">
+
+      </div>
+    </div>
+
+    
+  <!------------------------------------------------------------>   
+  <!------------------  Scripts de Buscador  ------------------->   
+    <script>
+
+
+
+      /* ------------------Lista de paraderos-----------------------*/
+
+      const paraderos =[
+        {nombre: 'Paradero Aki Santa Rosa', cordenadas: '20.93801606173682, -89.6178498596308'},
+        {nombre: 'Paradero UTM', cordenadas: '20.938096985617193, -89.61567752099675'},
+        {nombre: 'Paradero140', cordenadas: '20.93733948173477, -89.6131966359856'},
+        {nombre: 'Paradero141', cordenadas: '20.934964267324865, -89.61432334217652'},
+        {nombre: 'Paradero142', cordenadas: '20.93264713617412, -89.61451417947718'},
+        {nombre: 'Paradero143', cordenadas: '20.932324714923553, -89.61628838491791'},
+        {nombre: 'Parque Serapio Rendon', cordenadas: '20.931885221704604, -89.61859521418155'},
+        {nombre: 'Paradero144', cordenadas: '20.92991223627948, -89.61856628845432'},
+        {nombre: 'Paradero145', cordenadas: '20.928321875060615, -89.61705921411834'},
+        {nombre: 'Paradero146', cordenadas: '20.927659817590666, -89.61599161739193'},
+        {nombre: 'Paradero147', cordenadas: '20.92768281804461, -89.61435188827701'},
+        {nombre: 'Paradero148', cordenadas: '20.92771143611009, -89.61198500387385'},
+        {nombre: 'Paradero149', cordenadas: '20.927747244459372, -89.61033875128048'},
+        {nombre: 'IMSS 42 Sur', cordenadas: '20.92838541657377, -89.60773698089463'},
+
+        {nombre: 'Paradero152', cordenadas: '20.933797313112198, -89.60729091523456'},
+        {nombre: 'Glorieta Maria Luisa', cordenadas: '20.93452317959962, -89.6066057215828'},
+        {nombre: 'Paradero1', cordenadas: '20.934254982092487, -89.60591930121507'},
+
+        {nombre: 'Paradero24', cordenadas: '20.959831080042168, -89.5809203261194'},
+        {nombre: 'Paradero Bodega Aurera Oriente', cordenadas: '20.959864765789863, -89.57864182891582'},
+        {nombre: 'Paradero26', cordenadas: '20.958605768624956, -89.57538063473662'},
+        {nombre: 'Paradero27', cordenadas: '20.95780138478511, -89.57327138074113'},
+        {nombre: 'Paradero Ferre Oriente', cordenadas: '20.95722387578626, -89.57200141104984'},
+        {nombre: 'Paradero29', cordenadas: '20.959317335334394, -89.57026762635647'},
+        {nombre: 'Paradero Carretera Tixcocob', cordenadas: '20.966384514172308, -89.56877535937629'},
+        {nombre: 'Paradero30', cordenadas: '20.969756776278093, -89.56835731331333'},
+        {nombre: 'Paradero Willis Amalia S', cordenadas: '20.96741597337348, -89.56865761179873'},
+        {nombre: 'Paradero CETIS112', cordenadas: '20.96940036419445, -89.59018420499034'},
+        {nombre: 'Paradero IMSS Frac.', cordenadas: '20.96970972892871, -89.58796337744926'},
+        {nombre: 'Paradero Fracc. del Parque', cordenadas: '20.96975901600896, -89.58442210824698'},
+        {nombre: 'Paradero el pez Volador', cordenadas: '20.972416438366135, -89.58024421133759'},
+        {nombre: 'Paradero Bodega Aurrera Express, Itzimna', cordenadas: '20.99235238887957, -89.5711747652251'},
+        {nombre: 'Paradero Glorieta X-Tabay', cordenadas: '20.998159688508757, -89.57139803382918'},
+        {nombre: 'Paradero Macro Plaza', cordenadas: '20.999898753112127, -89.572223520303'},
+        {nombre: 'Plaza Fiesta', cordenadas: '20.99984464684565, -89.59699656152178'},
+        {nombre: 'Wallmart Uptown', cordenadas: '21.01129227570156, -89.58365077132648'},
+    ] 
+
+      const buscadorParaderosSCM = document.querySelector('#buscadorParaderosSCM');
+      const botonBuscar = document.querySelector('#botonBuscar');
+      const resultado = document.querySelector('#resultado');
+
+      const filtrar = ()=>{
+      console.log(buscadorParaderosSCM.value)
+      /* const texto = buscadorParaderosSCM.value.toLowerCase() */
+      }
+
+/*----------------------------FUNCION ACTIVAR PARADEROS ------------------------------------------------ */  
+  function activateBus(){
+    paraderos.forEach(p => {
+      let nombre = p.nombre.toLocaleLowerCase();
+      let coords = p.cordenadas.split(",")
+      L.marker(coords).addTo(map)
+      .openPopup();
+    });
+  };
+
+/*----------------------------FUNCION DE BUSQUEDA------------------------------------------------ */  
+   function busParadero() {
+        resultado.innerHTML = ""
+      /* console.log(buscadorParaderosSCM.value) */
+        const textoBuscador = buscadorParaderosSCM.value.toLowerCase();
+        
+        for (let paradero of paraderos) {
+          let nombre = paradero.nombre.toLocaleLowerCase();
+          if (nombre.lastIndexOf(textoBuscador) !== -1){
+
+            resultado.innerHTML += `<option >${paradero.nombre + "  (" + paradero.cordenadas + ")"} </option>`
+
+            let coords = paradero.cordenadas.split(",")
+            map.flyTo(coords,18);
+    
+            texto = paradero.nombre;
+            rutasMapa = texto;
+            L.marker(coords).addTo(map)
+            .bindPopup(texto)
+            .openPopup();
+            
+
+
+          }   
+        }
+        if(resultado.innerHTML === ''){
+          resultado.innerHTML += `
+            <option >No existe paradero</option>
+            `
+        }
+      }
+
+      buscadorParaderosSCM.addEventListener('keyup', busParadero)
+      </script>
+
+      
+
+
+      <!------------------  Scripts del Mapa  ------------------->   
+      
+      <script src="https://unpkg.com/leaflet@1.8.0/dist/leaflet.js"
+      integrity="sha512-BB3hKbKWOc9Ez/TAwyWxNXeoV9c1v6FIeYiBieIWkpLjauysF18NzgR1MBNBXf8/KABdlkX68nAhlwcDFLGPCQ=="
+      crossorigin=""></script>
+    <script src="JS/map.js"></script>
+    <script src="JS/mapRutas.js"></script>
+    <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
+    <footer >
+      <p>
+      INFORMACION DEL CONTACTO. 
+      Nuestra pagina brinda un numero destinado para alguna sugerencia o queja ciudadana a la cual podrás contactar al siguiente número telefónico 9991381494  
+      </p>
+    </footer>
+</body>
+</html>
